@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { postLoginRequest } from '../requests/auth';
+import { postLoginRequest, postSignUpRequest } from '../requests/auth';
 
 export default {
   props: ['action'],
@@ -31,7 +31,11 @@ export default {
     handleSubmit() {
       console.log(this.$store.getters.getAuthToken)
       console.log('Actiunea: ', this.action)
-      this.action === 'login' ? this.loginUser() : this.registerUser()
+      if (this.action === 'login') {
+        this.loginUser()
+      } else if (this.action === 'register') {
+        this.registerUser()
+      }
     },
     loginUser() {
       postLoginRequest(this.formData)
@@ -42,7 +46,12 @@ export default {
       })
     },
     registerUser() {
-
+      postSignUpRequest(this.formData)
+      .then(res => {
+        this.$store.commit('SET_TOKEN', res.token)
+        localStorage.setItem('token', res.token)
+        this.$router.push({ name: 'Home' })
+      })
     }
 
   }

@@ -3,7 +3,10 @@ export default {
     state.books = books
   },
   SET_TOKEN (state, token) {
-    console.log('SETTING tOKEN', token)
+    console.log('SETTING TOKEN', token)
     state.token = token
-  }
+  },
+  ADD_BOOK (state, newBook) {
+    state.books.push(newBook)
+  },
 }

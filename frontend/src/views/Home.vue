@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <create-book-form />
+    <CreateBookForm/>
     <Books />
   </div>
 </template>
@@ -17,9 +17,10 @@ export default {
     CreateBookForm
   },
   methods: {
-    fillForm(book) {
-      return this.newBook = {...book}
-    }
+    // fillForm(book) {
+    //   console.log('cartea de editat', book)
+    //   return this.$store.state.currentBook = book
+    // }
   }
 };
 </script>

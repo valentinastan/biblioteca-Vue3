@@ -3,8 +3,6 @@
     <router-link to="/">Home</router-link> |
     <router-link :to="{ name: 'Login', params: { action: 'login'} }">Login</router-link> |
     <router-link :to="{ name: 'Login', params: { action: 'register'} }">Register</router-link> |
-    <router-link v-if="this.$store.getters.getAuthToken" :to="{ name: 'AddEditBook', params: { actionOnBook: 'create'} }">Add a new book</router-link> |
-    <router-link v-if="this.$store.getters.getAuthToken" :to="{ name: 'AddEditBook', params: { actionOnBook: 'update'} }">Edit a book</router-link> |
   </div>
   <router-view />
 </template>

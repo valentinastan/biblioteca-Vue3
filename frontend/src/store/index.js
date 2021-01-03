@@ -5,7 +5,11 @@ import mutations from './mutations';
 export default createStore({
   state: {
     books: [],
-    currentBook: {},
+    currentBook: {
+      title: null,
+      price: null
+    },
+    bookFormAction: 'Add',
     token: ''
   },
   mutations,

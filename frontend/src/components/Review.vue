@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{reviewDetails.username}} <br/>
+    {{reviewDetails.email}} <br/>
     {{reviewDetails.text}}
   </div>
 </template>

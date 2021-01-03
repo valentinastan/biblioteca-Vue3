@@ -1,12 +1,12 @@
 <template>
     <div>
     <h4>Create a new book</h4>
-    <form @submit.prevent="createNewBook">
+    <form @submit.prevent="handleSubmit">
       <label for="Book title">Book title:</label> <br/>
-      <input type="text" v-model='newBook.title'><br/>
+      <input type="text" v-model='this.$store.state.currentBook.title'><br/>
        <label for="Book price">Book price:</label> <br/>
-      <input type="number" step="0.01" v-model='newBook.price'><br/>
-      <button type="submit">Add</button><br/>
+      <input type="number" step="0.01" v-model='this.$store.state.currentBook.price'><br/>
+      <button type="submit">{{this.$store.state.bookFormAction}}</button><br/>
     </form>
 
   </div>
@@ -16,20 +16,41 @@
 export default {
   data() {
     return {
-      newBook: {
-        title: null,
-        price: null
-      }
+      // newBook: {
+      //   title: null,
+      //   price: null
+      // }
     }
   },
   methods: {
+    handleSubmit() {
+      console.log(this.$store.state.currentBook)
+      console.log('Actiunea: ', this.$store.state.bookFormAction)
+      switch(this.$store.state.bookFormAction) {
+        case 'Add': {
+          this.createNewBook()
+        } break;
+        case 'Update': {
+          this.updateBook()
+        } break;
+      } 
+    },
     createNewBook() {
-      if (this.newBook.title && this.newBook.price !== null) {
-        this.$store.dispatch('postBook', this.newBook)
+      let newBook = this.$store.state.currentBook
+      if (newBook.title && newBook.price !== null) {
+        this.$store.dispatch('postBook', {...newBook})
+        this.clearForm()
+      }
+    },
+    updateBook() {
+      let updatedBook = this.$store.state.currentBook
+      if (updatedBook.title && updatedBook.price !== null) {
+        this.$store.dispatch('putBook', {...updatedBook})
+        this.clearForm()
       }
     },
     clearForm() {
-    this.newBook = {
+    this.$store.state.currentBook = {
       id: null, 
       title: null,
       price: null

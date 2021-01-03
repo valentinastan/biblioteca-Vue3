@@ -37,8 +37,7 @@ exports.delete = async (req, res, next) => {
   // const books = db.dbCon.collection('books')
   // const bookRef = books.doc(bookId)
   let bookRef = await db.dbCon.collection('books').doc(bookId);
- 
   bookRef.delete()
 
-  res.status(204)
+  res.status(200).json(bookId)
 }

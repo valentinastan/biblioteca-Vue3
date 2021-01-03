@@ -32,10 +32,14 @@ export default {
     this.$store.dispatch('getBooks')
   },
   methods: {
-    deleteBook() {
-
+    fillForm(book) {
+      console.log('cartea de editat', book)
+      this.$store.state.bookFormAction = 'Update'
+      return this.$store.state.currentBook = {...book}
+    },
+    deleteBook(id) {
+      this.$store.dispatch('deleteBook', id)
     }
-
   }
 }
 </script>

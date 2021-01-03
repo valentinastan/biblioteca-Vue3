@@ -14,13 +14,6 @@ const routes = [
     component: () =>
       import("../components/Login.vue")
   },
-  {
-    path: "/book/:actionOnBook",
-    name: "AddEditBook",
-    props: true,
-    component: () =>
-      import("../components/AddEditBook.vue")
-  }
 
 ];
 

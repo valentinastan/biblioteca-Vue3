@@ -2,11 +2,30 @@ const db = require('../lib/firebase');
 const faker = require('faker');
 const { random } = require('faker');
 
+const populateDb = async () => {
+  await generateUsers()
+  for(let i = 0; i < 10; i++) {
+    await addBook()
+   }
+}
+
+let usersEmails = []
+const generateUsers = async () => {
+  for(let i = 0; i < 2; i++) {
+    let email = faker.internet.email()
+    await db.dbCon.collection('users').add({
+      email: email,
+      password: '123456'
+    })
+    usersEmails.push(email)
+  }
+}
+
 const generateReviews = () => {
   let reviews = []
-  for(let i = 0; i < Math.floor(Math.random() * 11); i++) {
+  for(let i = 1; i < Math.floor(Math.random() * 11); i++) {
     reviews.push({
-      username: faker.internet.userName(),
+      email: usersEmails[Math.floor(Math.random() * usersEmails.length)],
       text: faker.lorem.sentences()
     })        
   }
@@ -16,27 +35,24 @@ const generateReviews = () => {
 const addBook = async () => {
   let reviews = generateReviews();
   let createdReviews = []
-  for(review of reviews){
-    let createdReview = await db.dbCon.collection('reviews').add(review)//add bookid si user id, get la bd iau un user
-    createdReviews.push({ ...review, _id: createdReview.id })
-  }
-  await db.dbCon.collection('books').add({ 
+
+  let currentBook = await db.dbCon.collection('books').add({ 
     title: faker.lorem.sentence(),
     price: faker.random.float({'min': 10,'max': 150}),
-    reviews: createdReviews
   })
+
+  for(review of reviews){
+    let reviewCopy = {...review, bookId: currentBook.id}
+    let createdReview = await db.dbCon.collection('reviews').add(reviewCopy)
+    createdReviews.push({ ...reviewCopy, _id: createdReview.id })
+  }
+
+  await currentBook.update({reviews: createdReviews})
+
 }
 
-for(let i = 0; i < 10; i++) {
-  addBook()
-}
+populateDb()
 
-for(let i = 0; i < 2; i++) { //generate users
-  db.dbCon.collection('users').add({
-    email: faker.internet.email(),
-    password: '123456'
-  })
-}
 
 //create review functie 
 //rute private

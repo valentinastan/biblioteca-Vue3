@@ -1,15 +1,25 @@
 <template>
   <div>
-    {{reviewDetails.email}} <br/>
-    {{reviewDetails.text}}
+    <div v-if="reviews.length > 0">Reviews</div>
+    <div v-for="review in reviews" :key="review.id">
+      {{review.email}} <br />
+      {{review.text}} <br />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    reviewDetails: Object
-  }
+  name: 'Review',
+  props: ['bookReviews', 'bookId'],
+  computed: {
+    reviews() {
+        return this.$store.state.reviews
+    }
+  },
+  mounted() {
+    this.$store.dispatch('getReviews', this.bookId)
+  },
 
 }
 </script>

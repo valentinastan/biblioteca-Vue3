@@ -13,6 +13,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -38,24 +39,31 @@ export default {
     createNewBook() {
       let newBook = this.$store.state.currentBook
       if (newBook.title && newBook.price !== null) {
-        this.$store.dispatch('postBook', {...newBook})
+        this.$store.dispatch('postBook', {
+          data: {...newBook}, 
+          header: {'Authorization': this.$store.getters.getAuthToken}
+        })
         this.clearForm()
       }
     },
     updateBook() {
       let updatedBook = this.$store.state.currentBook
       if (updatedBook.title && updatedBook.price !== null) {
-        this.$store.dispatch('putBook', {...updatedBook})
+        this.$store.dispatch('putBook', {
+          data: {...updatedBook}, 
+          header: {'Authorization': this.$store.getters.getAuthToken}
+        })
         this.clearForm()
       }
     },
     clearForm() {
     this.$store.state.currentBook = {
-      id: null, 
       title: null,
-      price: null
+      price: null,
+      reviews: []
       }
-    },
+    this.$store.state.bookFormAction = 'Add'
+    }
   }
 }
 </script>

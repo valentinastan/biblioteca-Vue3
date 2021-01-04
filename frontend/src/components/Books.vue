@@ -7,26 +7,21 @@
         <div>Book price: {{ book.price}} </div><br/> 
         <button v-if="this.$store.getters.getAuthToken" :id='"PUT_" + book.id' @click=fillForm(book)>Edit</button>
         <button v-if="this.$store.getters.getAuthToken" :id='"DEL_" + book.id' @click=deleteBook(book.id)>Delete</button>
-        <div>Reviews: </div>
-        <review v-for="review in book.reviews" :key="review.id" :reviewDetails='review'>
-        </review>
+        <router-link :to="{ name: 'BookDetails', params: { id: book.id} }">ShowMore</router-link>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import Review from './Review.vue';
+
 
 export default {
   name: "Books",
-  components: {
-    Review
-  },
   computed: {
     books() {
       return this.$store.state.books
-    }
+    },
   },
   mounted() {
     this.$store.dispatch('getBooks')
@@ -38,8 +33,14 @@ export default {
       return this.$store.state.currentBook = {...book}
     },
     deleteBook(id) {
-      this.$store.dispatch('deleteBook', id)
-    }
+      this.$store.dispatch('deleteBook', {
+        id: id, 
+        header: {'Authorization': this.$store.getters.getAuthToken}
+      })
+    },
+    redirect() {
+      this.$router.push({name: 'BookDetails'})
+    },
   }
 }
 </script>

@@ -4,8 +4,29 @@
     <router-link :to="{ name: 'Login', params: { action: 'login'} }">Login</router-link> |
     <router-link :to="{ name: 'Login', params: { action: 'register'} }">Register</router-link> |
   </div>
+
+  <button @click="redirect">Redirect</button>
+  <button @click="back">Go back</button>
+  <button @click="forward">Go forward</button>
+
   <router-view />
 </template>
+
+<script>
+export default {
+  methods: {
+    redirect() {
+      this.$router.push({name: 'Home'})
+    },
+    back() {
+      this.$router.go(-1)
+    },
+    forward() {
+      this.$router.go(1)
+    }
+  }
+}
+</script>
 
 <style>
 #app {

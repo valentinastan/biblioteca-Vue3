@@ -14,6 +14,13 @@ const routes = [
     component: () =>
       import("../components/Login.vue")
   },
+  {
+    path: "/books/showMore",
+    name: "BookDetails",
+    props: true,
+    component: () =>
+      import("../components/BookDetails.vue")
+  },
 
 ];
 

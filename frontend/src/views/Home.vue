@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <CreateBookForm/>
+    <CreateBookForm v-if="this.$store.getters.getAuthToken"/>
     <Books />
   </div>
 </template>

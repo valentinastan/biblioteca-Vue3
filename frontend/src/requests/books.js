@@ -6,17 +6,25 @@ export async function getBooksRequest() {
   return books.data
 }
 
-export async function postBookRequest(params) {
-  let newBook = await post('book', params)
-  
+export async function getOneBookRequest(id) {
+  console.log('id ul primit ', id)
+  let currentBook = await get('books/' + id)
+  console.log('cartea primita din be ', currentBook)
+
+  return currentBook.data
+}
+
+export async function postBookRequest(params, headers) {
+  let newBook = await post('books', params, headers)
+
   console.log('params: ', params)
   console.log('post: ', newBook)
 
   return newBook.data
 }
 
-export async function putBookRequest(params) {
-  let updatedBook = await put('book/' + params.id, params)
+export async function putBookRequest(params, headers) {
+  let updatedBook = await put('books/' + params.id, params, headers)
   
   console.log('params: ', params)
   console.log('put: ', updatedBook)
@@ -24,8 +32,9 @@ export async function putBookRequest(params) {
   return updatedBook.data
 }
 
-export async function deleteBookRequest(id) {
-  let deletedBook = await del('book/' + id)
+export async function deleteBookRequest(id, headers) {
+  console.log('idL   : ', id)
+  let deletedBook = await del('books/' + id, headers)
   
   console.log('deletedBook: ', deletedBook)
 

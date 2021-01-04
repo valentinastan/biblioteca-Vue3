@@ -1,6 +1,7 @@
 const db = require('../lib/firebase');
 const faker = require('faker');
 const { random } = require('faker');
+const { currentDateAndTime } = require('../lib/generateDataAndTime')
 
 const populateDb = async () => {
   await generateUsers()
@@ -26,7 +27,8 @@ const generateReviews = () => {
   for(let i = 1; i < Math.floor(Math.random() * 11); i++) {
     reviews.push({
       email: usersEmails[Math.floor(Math.random() * usersEmails.length)],
-      text: faker.lorem.sentences()
+      text: faker.lorem.sentences(),
+      created_at: currentDateAndTime()
     })        
   }
   return reviews
@@ -39,6 +41,7 @@ const addBook = async () => {
   let currentBook = await db.dbCon.collection('books').add({ 
     title: faker.lorem.sentence(),
     price: faker.random.float({'min': 10,'max': 150}),
+    created_at: currentDateAndTime()
   })
 
   for(review of reviews){
@@ -55,4 +58,3 @@ populateDb()
 
 
 //create review functie 
-//rute private

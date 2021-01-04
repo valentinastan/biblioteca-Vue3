@@ -10,36 +10,40 @@ export async function get(url, params) {
   return response
 }
 
-const axiosFormActionDefaults = ({ url, method, params = {} }) => ({
+const axiosFormActionDefaults = ({ url, method, params = {}, headers = {} }) => ({
   method,
   url,
   data: params,
+  headers
 })
 
-export async function post(url, params) {
+export async function post(url, params, headers) {
   let response = await axios(axiosFormActionDefaults({
     url: `${SERVER}/${url}`,
     method: 'POST',
-    params
+    params,
+    headers,
   }))
 
   return response
 }
 
-export async function del(url) {
+export async function del(url, headers) {
   let response = await axios(axiosFormActionDefaults({
     url: `${SERVER}/${url}`,
     method: 'DELETE',
+    headers,
   }))
 
   return response
 }
 
-export async function put(url, params) {
+export async function put(url, params, headers) {
   let response = await axios(axiosFormActionDefaults({
     url: `${SERVER}/${url}`,
     method: 'PUT',
-    params
+    params,
+    headers,
   }))
 
   return response

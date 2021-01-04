@@ -7,10 +7,17 @@ export default createStore({
     books: [],
     currentBook: {
       title: null,
-      price: null
+      price: null,
+      reviews: []
+    },
+    bookWithDetails: {
+      title: null,
+      price: null,
+      reviews: []
     },
     bookFormAction: 'Add',
-    token: ''
+    token: '',
+    reviews: [],
   },
   mutations,
   actions,

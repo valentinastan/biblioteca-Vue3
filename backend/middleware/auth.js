@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
-  const token = req.get('authorization')
+  const token = req.get('Authorization')
   let decodedToken
 
   try {

@@ -20,22 +20,22 @@ exports.show = async (req, res, next) => {
 }
 
 exports.create = async (req, res, next) => {
-  const bookDates = req.body
+  const bookData = req.body
 
-  let newBookRef = await (await db.dbCon.collection('books').add({...bookDates, created_at: currentDateAndTime()})).get()
+  let newBookRef = await (await db.dbCon.collection('books').add({...bookData, created_at: currentDateAndTime()})).get()
   let newBook = {id: newBookRef.id, ...newBookRef.data()}
 
   res.status(200).json(newBook)
 }
 
 exports.update = async (req, res, next) => {
-  const bookDates = req.body
+  const bookData = req.body
 
-  let book = db.dbCon.collection('books').doc(bookDates.id);
-  let searchedId = bookDates.id
+  let book = db.dbCon.collection('books').doc(bookData.id);
+  let searchedId = bookData.id
 
-  delete bookDates.id
-  await book.update(bookDates)
+  delete bookData.id
+  await book.update(bookData)
   let bookValues = await db.dbCon.collection('books').doc(searchedId).get()
   let updatedBook = {id: searchedId, ...bookValues.data()}
 

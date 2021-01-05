@@ -2,6 +2,8 @@
   <div>
     <h2>Book details</h2>
     <h3>
+      {{id}}
+      {{currentBook.id}}
       {{currentBook.title}} <br/>
       Price: {{currentBook.price}}
     </h3>
@@ -35,6 +37,7 @@ export default {
     },
   },
   mounted() {
+    console.log('am intrat in mounted', this.$store.state.bookWithDetails , "si id: ", this.id)
     this.$store.dispatch('getOneBook', this.id)
   },
   methods() {

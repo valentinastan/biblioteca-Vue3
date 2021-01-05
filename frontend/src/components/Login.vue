@@ -1,16 +1,26 @@
 <template>
   <div>
      <h4>{{ action.toUpperCase() }} PAGE</h4>
-      <h5></h5>
-      <div className = 'login'>
-        <form @submit.prevent="handleSubmit">
-          <label for="email">Email:</label> <br/>
-          <input type="text" v-model='formData.email' id="email" name="email" placeholder='Your email'/><br/>
-          <label for="password">Password:</label><br/>
-          <input type="password" v-model='formData.password' id="password" name="password" placeholder='Your password'/><br/>
-          <button>{{ action.toUpperCase() }}</button>
-        </form>
+    <form class="form-horizontal" @submit.prevent="handleSubmit">
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">Email:</label>
+        <div class="col-sm-10">
+          <input type="email" v-model='formData.email' class="form-control" id="inputEmail3" placeholder="Email"/>
+        </div>
       </div>
+      <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-10">
+          <input type="password" v-model='formData.password' class="form-control" id="inputPassword3" placeholder="Password">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button class="btn btn-default">{{ action.toUpperCase() }}</button>
+        </div>
+      </div>
+    </form>
+   
   </div>
 </template>
 

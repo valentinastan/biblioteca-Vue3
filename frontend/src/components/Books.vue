@@ -7,32 +7,29 @@
      <button @click="sortBy('created_at')">Created at</button>
     <ul class="list-unstyled">
       <li v-for="book in sortedBooks" :key="book.title" class="book">
-        <p class="text-left text-capitalize">{{ book.title }} </p>
-        <p class="text-left">Book price: {{ book.price}} </p>
+        <p class=" text-capitalize">{{ book.title }} </p>
+        <p class="">Book price: {{ book.price}} </p>
+        <router-link :to="{ name: 'BookDetails', params: { id: book.id} }">ShowMore</router-link>
 
-        <div class="text-right booksActions">
+        <div v-if="this.$store.getters.getAuthToken" class="booksActions">
           <figure>
             <div>
               <span>Edit</span>
               <span>
-                <button v-if="this.$store.getters.getAuthToken" :id='"PUT_" + book.id' @click=fillForm(book)>Edit</button>
+                <button :id='"PUT_" + book.id' @click=fillForm(book)>Edit</button>
               </span>
             </div>
           </figure>
           <figure>
             <div>
               <span>Delete</span>
-              <span class="deleteButt">
-                <button v-if="this.$store.getters.getAuthToken" :id='"DEL_" + book.id' @click=deleteBook(book.id)>Delete</button>
+              <span class="deleteButton">
+                <button :id='"DEL_" + book.id' @click=deleteBook(book.id)>Delete</button>
               </span>
             </div>
           </figure>
-
           <!-- <button v-if="this.$store.getters.getAuthToken" :id='"PUT_" + book.id' @click=fillForm(book)>Edit</button> -->
           <!-- <button v-if="this.$store.getters.getAuthToken" :id='"DEL_" + book.id' @click=deleteBook(book.id)>Delete</button> -->
-          <div class="showMore">
-            <router-link :to="{ name: 'BookDetails', params: { id: book.id} }">ShowMore</router-link>
-          </div>
         </div>
       </li>
     </ul>

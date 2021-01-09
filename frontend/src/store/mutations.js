@@ -29,6 +29,8 @@ export default {
   },
   ADD_REVIEW (state, newReview) {
     state.reviews.unshift(newReview)
-    state.reviews.pop()  
+    if(state.reviews.length > 10) {
+      state.reviews.pop()  
+    }
   }
 }

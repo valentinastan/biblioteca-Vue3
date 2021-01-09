@@ -1,8 +1,8 @@
 <template>
-  <div class="book">
+  <div class="currentBook">
     <div>
     <p>{{currentBook.title}}</p>
-    <p>Price: {{this.$store.state.reviews.length}}</p>
+    <p>Price: {{currentBook.title}}</p>
     </div>
     <CreateReview v-if="this.$store.getters.getAuthToken" :bookId = 'id'/>
     <button v-if="this.$store.state.reviews.length !== 0"  @click="getReviews('previous')">Previous</button>

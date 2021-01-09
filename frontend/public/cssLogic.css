@@ -28,6 +28,17 @@
   border-color: solid teal;
   margin: 5px;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: start;
+}
+
+.currentBook {
+  background-color: #f2f9f9;
+  border-color: solid teal;
+  margin: 5px;
+  border-radius: 10px;
 }
 
 .review {
@@ -39,7 +50,9 @@
 
 
 .booksActions  {
-  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 figure {
@@ -88,7 +101,7 @@ span:nth-child(2){color:#f2f9f9;background:#cce6e6;transform: rotateX(90deg) tra
   font-family:'Source Sans Pro',sans-serif;
 }
 
-.deleteButt button{
+.deleteButton button{
   color: red;
 }
 

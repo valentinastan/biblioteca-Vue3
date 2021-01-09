@@ -15,7 +15,7 @@ const routes = [
       import("../components/Login.vue")
   },
   {
-    path: "/books/showMore",
+    path: "/books/:id",
     name: "BookDetails",
     props: true,
     component: () =>

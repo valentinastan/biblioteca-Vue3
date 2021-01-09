@@ -29,5 +29,6 @@ export default {
   },
   ADD_REVIEW (state, newReview) {
     state.reviews.unshift(newReview)
+    state.reviews.pop()  
   }
 }

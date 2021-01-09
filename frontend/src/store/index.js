@@ -28,7 +28,8 @@ export default createStore({
       const token = localStorage.getItem('token')
       
       return token
-    }
+    },
+    getBooks: state => state.books
   },
   modules: {}
 });

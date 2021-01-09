@@ -1,14 +1,17 @@
 <template>
-    <div>
-    <!-- <h4>Create a new review</h4> -->
-    <form @submit.prevent="createNewReview">
-      <!-- <label for="Email">Book title:</label> <br/>
-      <input type="text" v-model='this.newReview.email'><br/> -->
-       <label for="Review">Your review:</label> <br/>
-      <input type="text" v-model='newReview.text'><br/>
-      <button type="submit">Add</button><br/>
-    </form>
+    <div class="container-fluid">
+    <form  class="form col-md-4 col-md-offset-4" @submit.prevent="createNewReview">
 
+      <div class="form-group">
+        <label for="Review" class="pull-left">Your review:</label> <br/>
+        <textarea  v-model='newReview.text' placeholder="Remember, be nice!" class="form-control"></textarea>
+      </div>
+      <div class="form-group">
+        <div class="pull-right">
+          <button type="submit" class="btn btn-primary">Add</button><br/>
+        </div>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -19,7 +22,6 @@ export default {
   data() {
     return {
       newReview: {
-        email: this.$store.getters.getAuthToken,
         text: null,
         bookId: this.bookId
       }
@@ -27,7 +29,7 @@ export default {
   },
   methods: {
     createNewReview() {
-      if (this.newReview.email && this.newReview.text !== null) {
+      if (this.newReview.text !== null && this.newReview.bookId !== undefined) {
         this.$store.dispatch('postReview', {
           data: {...this.newReview}, 
           header: {'Authorization': this.$store.getters.getAuthToken}
@@ -37,8 +39,8 @@ export default {
     },
     clearForm() {
     this.newReview = {
-        email: this.$store.getters.getAuthToken,
-        text: null
+        text: null,
+        bookId: this.bookId
       }
     }
   }

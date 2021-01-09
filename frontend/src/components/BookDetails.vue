@@ -1,18 +1,13 @@
 <template>
-  <div>
-    <h2>Book details</h2>
-    <h3>
-      {{id}}
-      {{currentBook.id}}
-      {{currentBook.title}} <br/>
-      Price: {{currentBook.price}}
-    </h3>
-    <Review :bookReviews = 'reviewsOfCurrentBook' :bookId = 'id'/>
+  <div class="book">
+    <div>
+    <p>{{currentBook.title}}</p>
+    <p>Price: {{this.$store.state.reviews.length}}</p>
+    </div>
     <CreateReview v-if="this.$store.getters.getAuthToken" :bookId = 'id'/>
-    <!-- <div v-if="this.$store.state.books[id].reviews.length > 0">Reviews: 
-      <review v-for="review in this.$store.state.books[id].reviews" :key="review.id" :reviewDetails='review'>
-      </review>
-    </div> -->
+    <button v-if="this.$store.state.reviews.length !== 0"  @click="getReviews('previous')">Previous</button>
+    <button v-if="this.$store.state.reviews.length === 10"  @click="getReviews('next')">Next</button>
+    <Review :bookReviews = 'reviewsOfCurrentBook' :bookId = 'id'/>
   </div>
 </template>
 
@@ -35,15 +30,38 @@ export default {
     reviewsOfCurrentBook() {
       return this.$store.state.bookWithDetails.reviews
     },
+
   },
   mounted() {
     console.log('am intrat in mounted', this.$store.state.bookWithDetails , "si id: ", this.id)
     this.$store.dispatch('getOneBook', this.id)
   },
-  methods() {
+  methods: {
+    lastReviewId() {
+      const reviews =  this.$store.state.reviews
+      return reviews[reviews.length -1].id
+    },
+    firstReviewId() {
+      const reviews =  this.$store.state.reviews
+      return reviews[0].id
+    },
+    getReviews(direction) {
+      let reviewId
+      if(direction === 'previous') {
+        reviewId = this.firstReviewId()
+      }
+      if(direction === 'next') {
+        reviewId = this.lastReviewId()
+      }
+      this.$store.dispatch('getReviews', {
+        bookId: this.id, 
+        queryParams: { 
+          reviewId,
+          direction
+        }
+      })
+    }
   }
-
-
 }
 </script>
 

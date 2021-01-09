@@ -1,11 +1,16 @@
 <template>
-  <div>
+  <div class="row">
     <div v-if="reviews.length > 0">Reviews</div>
-    <div v-for="review in reviews" :key="review.id">
-      {{review.email}} <br />
-      {{review.text}} <br />
+    <div v-for="review in reviews" :key="review.id" class="myClass">
+      <blockquote class="col-md-4 col-md-offset-4 myClass">
+        <p>{{review.text}}</p>
+        <footer class="pull-right">Wrote by <cite title="email">{{review.email}}</cite></footer>
+      </blockquote>
     </div>
   </div>
+
+
+  
 </template>
 
 <script>
@@ -18,7 +23,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('getReviews', this.bookId)
+    this.$store.dispatch('getReviews', { bookId: this.bookId })
   },
 
 }

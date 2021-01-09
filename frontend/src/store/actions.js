@@ -23,12 +23,12 @@ export default {
 
   },
 
-  getReviews(context, bookId) {
-    getReviewsRequest(bookId).then(reviews => context.commit('SET_REVIEWS', reviews))
+  getReviews(context, params) {
+    getReviewsRequest(params).then(reviews => context.commit('SET_REVIEWS', reviews))
   },
 
   postReview(context, params) {
     console.log('params = ', params)
     postReviewsRequest(params.data, params.header).then(createdReview => context.commit('ADD_REVIEW', createdReview))
-  }
+  },
 }

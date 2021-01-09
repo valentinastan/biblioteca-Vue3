@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
+  <div class="container-fluid homePage">
     <CreateBookForm v-if="this.$store.getters.getAuthToken"/>
-    <Books />
+    <Books/>
   </div>
 </template>
 

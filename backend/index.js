@@ -38,14 +38,15 @@ app.get('/', function(req, res) {
   res.sendFile(vuePath + 'index.html');
 });
 
-// const router = express.Router();
-// router.get('/test', async function(req, res, next) {
-//   const doc = await db.dbCon.collection('test').add({ gigel: 'dorel'})
-//   console.log(doc.id, doc, doc.gigel)
+app.use((error, req, res, next) => {
+  const {
+    statusCode,
+    message,
+    errorArray
+  } = error
 
-//   return {}
-// })
-// app.use(router)
+  res.status(statusCode).json({ message: message, errors: errorArray })
+})
 
 
 app.listen(2020)

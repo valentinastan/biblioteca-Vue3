@@ -1,14 +1,25 @@
 <template>
-    <div>
-    <h4>Create a new book</h4>
-    <form @submit.prevent="handleSubmit">
-      <label for="Book title">Book title:</label> <br/>
-      <input type="text" v-model='this.$store.state.currentBook.title'><br/>
-       <label for="Book price">Book price:</label> <br/>
-      <input type="number" step="0.01" v-model='this.$store.state.currentBook.price'><br/>
-      <button type="submit">{{this.$store.state.bookFormAction}}</button><br/>
-    </form>
-
+  <div class="bg-info container-fluid col-md-4 inputForm inputFormBook">
+  <h4>Create a new book</h4>
+  <form class="form-horizontal" @submit.prevent="handleSubmit">
+    <div class="form-group">
+      <label for="bookTitle" class="col-md-4 control-label">Book title:</label>
+      <div class="col-md-6">
+        <input type="text" v-model='this.$store.state.currentBook.title' class="form-control" id="inputBookTitle" placeholder="Title"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="bookPrice" class="col-md-4 control-label">Book price:</label>
+      <div class="col-md-6">
+        <input type="number" step="0.01" v-model='this.$store.state.currentBook.price' class="form-control" id="inputBookPricee" placeholder="Price"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-offset-4 col-md-1">
+        <button type="submit" class="btn btn-primary">{{this.$store.state.bookFormAction}}</button>
+      </div>
+    </div>
+  </form>
   </div>
 </template>
 

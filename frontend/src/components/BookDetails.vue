@@ -1,12 +1,12 @@
 <template>
   <div class="currentBook">
-    <div>
+    <div class="bookData">
     <p>{{currentBook.title}}</p>
-    <p>Price: {{currentBook.title}}</p>
+    <p>Price: {{currentBook.price}} RON</p>
     </div>
     <CreateReview v-if="this.$store.getters.getAuthToken" :bookId = 'id'/>
-    <button v-if="this.$store.state.reviews.length !== 0"  @click="getReviews('previous')">Previous</button>
-    <button v-if="this.$store.state.reviews.length === 10"  @click="getReviews('next')">Next</button>
+    <button v-if="this.$store.state.reviews.length !== 0"  @click="getReviews('previous')" class="buttonPage">Previous</button>
+    <button v-if="this.$store.state.reviews.length === 10"  @click="getReviews('next')" class="buttonPage">Next</button>
     <Review :bookReviews = 'reviewsOfCurrentBook' :bookId = 'id'/>
   </div>
 </template>

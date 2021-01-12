@@ -19,7 +19,7 @@ export default {
   },
 
   deleteBook(context, params) {
-    deleteBookRequest(params.id, params.header).then(deletedId => context.commit('DELETE_BOOK', deletedId))
+    deleteBookRequest(params.id, params.header).then(() => context.commit('DELETE_BOOK', params.id))
 
   },
 

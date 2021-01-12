@@ -1,10 +1,8 @@
-.myClass {
-  background-color: chartreuse;
-}
-
 .homePage {
   display: flex;
   flex-direction: column;
+  font-size: 16px;
+  font-family:'Source Sans Pro',sans-serif;
 }
 
 .inputForm {
@@ -34,18 +32,25 @@
   text-align: start;
 }
 
-.currentBook {
-  background-color: #f2f9f9;
-  border-color: solid teal;
-  margin: 5px;
-  border-radius: 10px;
+.book a {
+  color: teal;
+  text-decoration: none;
+}
+
+.book a:hover {
+  font-size: 17px;
+}
+
+.reviewTitle {
+  letter-spacing: 25px;
+  text-shadow: 1px 1px 2px teal;
+  text-transform: uppercase;
 }
 
 .review {
-  background-color: red;
+  background-color: #cce6e6;
   border-color: solid teal;
-  margin: 5px;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 
 
@@ -93,10 +98,7 @@ span:nth-child(2){color:#f2f9f9;background:#cce6e6;transform: rotateX(90deg) tra
   color: green;
   text-align: center;
   text-decoration: none;
-  /* display: inline-block; */
   font-size: 15px;
-  /* width:100%;
-  height:100%; */
   text-transform:uppercase;
   font-family:'Source Sans Pro',sans-serif;
 }
@@ -105,13 +107,64 @@ span:nth-child(2){color:#f2f9f9;background:#cce6e6;transform: rotateX(90deg) tra
   color: red;
 }
 
+.myBooks .sortButton {
+  color: #2F70A9;
+  display: flex;
+  justify-content: center;
+  font-size: 16px;
+  align-items: center;
+}
+
+.myBooks .sortButton button {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #2F70A9;
+  width: 13%;
+  padding: 10px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 5px 5px;
+  transition-duration: 0.4s;
+}
+
+.myBooks .sortButton button:hover {
+  background-color: #2F70A9;
+  color: white;
+}
+
 .currentBook{
   background-color: #f2f9f9;
   border-color: solid teal;
-  margin: 5px;
   border-radius: 10px;
+  font-size: 16px;
 }
 
-.currentBook h3 {
-  color: red;
+.currentBook .bookData {
+  padding-top: 25px;
+  font-size: 20px;
+}
+
+.buttonPage {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #2F70A9;
+  width: 7%;
+  padding: 10px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 50px 9.5% 2px;
+  transition-duration: 0.4s;
+}
+
+.buttonPage:hover {
+  background-color: #2F70A9;
+  color: white;
+}
+
+.row {
+  margin-right: 0;
+  margin-left: 0;
 }

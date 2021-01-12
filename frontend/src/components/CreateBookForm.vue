@@ -1,6 +1,6 @@
 <template>
   <div class="bg-info container-fluid col-md-4 inputForm inputFormBook">
-  <h4>Create a new book</h4>
+  <h3>Create a new book</h3>
   <form class="form-horizontal" @submit.prevent="handleSubmit">
     <div class="form-group">
       <label for="bookTitle" class="col-md-4 control-label">Book title:</label>
@@ -59,6 +59,7 @@ export default {
     },
     updateBook() {
       let updatedBook = this.$store.state.currentBook
+      console.log('updated booooooooooooook ', updatedBook)
       if (updatedBook.title && updatedBook.price !== null) {
         this.$store.dispatch('putBook', {
           data: {...updatedBook}, 

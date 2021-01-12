@@ -1,8 +1,8 @@
 <template>
   <div class="row">
-    <div v-if="reviews.length > 0">Reviews</div>
-    <div v-for="review in reviews" :key="review.id" class="myClass">
-      <blockquote class="col-md-4 col-md-offset-4 myClass">
+    <div v-if="reviews.length > 0" class="reviewTitle">Reviews</div>
+    <div v-for="review in reviews" :key="review.id">
+      <blockquote class="col-md-4 col-md-offset-4 review">
         <p>{{review.text}}</p>
         <footer class="pull-right">Wrote by <cite title="email">{{review.email}}</cite></footer>
       </blockquote>

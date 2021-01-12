@@ -1,12 +1,13 @@
 const db = require('../lib/firebase');
-const { currentDateAndTime } = require('../lib/generateDataAndTime')
+const { secondsToDate, getTimestamp } = require('../lib/generateDataAndTime')
 
 exports.index = async (req, res, next) => {
   const snapshot = await db.dbCon.collection('books').orderBy('created_at', 'desc').get();
-  const books = []
+
+  let books = []
   snapshot.forEach(book => books.push({id: book.id, ...book.data()}))
-  console.log('cartile ordonate', books)
-  
+  books.forEach(book => book.created_at = secondsToDate(book.created_at._seconds))
+
   res.status(200).json(books) 
 }
 
@@ -14,6 +15,17 @@ exports.show = async (req, res, next) => {
   const bookId = req.params.id
 
   let bookRef = await db.dbCon.collection('books').doc(bookId).get()
+ 
+  const error = new Error('Invalid request')
+  error.errorArray = []
+  error.statusCode = 400
+  if(!bookRef.data()) {
+    error.errorArray.push('Invalid id')
+  }
+  if(error.errorArray.length > 0) {
+    next(error)
+  }
+
   let currentBook = {id: bookRef.id, ...bookRef.data()}
   console.log('ce trimit', currentBook)
   res.status(200).json(currentBook)
@@ -22,22 +34,63 @@ exports.show = async (req, res, next) => {
 exports.create = async (req, res, next) => {
   const bookData = req.body
 
-  let newBookRef = await (await db.dbCon.collection('books').add({...bookData, created_at: currentDateAndTime()})).get()
-  let newBook = {id: newBookRef.id, ...newBookRef.data()}
+  const error = new Error('Invalid request')
+  error.errorArray = []
+  error.statusCode = 400
+  if(!bookData) {
+    error.errorArray.push('No body specified for request')
+  }
+  if (!bookData.title || bookData.title.length === 0) {
+    error.errorArray.push('No title specified for request')
+  }
+  if (!bookData.price) {
+    error.errorArray.push('No price specified for request')
+  }
+  if(error.errorArray.length > 0) {
+    next(error)
+    return
+  }
 
+  let newBookRef = await (await db.dbCon.collection('books').add({...bookData, created_at: getTimestamp()})).get()
+  let newBook = {id: newBookRef.id, ...newBookRef.data()}
+  newBook.created_at = secondsToDate(newBook.created_at._seconds)
+  
   res.status(200).json(newBook)
 }
 
 exports.update = async (req, res, next) => {
   const bookData = req.body
+  const bookId = req.params.id
 
-  let book = db.dbCon.collection('books').doc(bookData.id);
-  let searchedId = bookData.id
+  const error = new Error('Invalid request')
+  error.errorArray = []
+  error.statusCode = 400
+  if(!bookData) {
+    error.errorArray.push('No body specified for request')
+  }
+  if ((!bookData.title || bookData.title.length === 0) && !bookData.price) {
+    error.errorArray.push('No data specified for request')
+  }
 
+  let book = db.dbCon.collection('books').doc(bookId);
+  let searchedId = bookId
+  let bookRef = await book.get()
+ 
+  if(!bookRef.data()) {
+    error.errorArray.push('Invalid id specified for request')
+  }
+  if(error.errorArray.length > 0) {
+    next(error)
+  }
+
+  const created_at = bookRef.data().created_at
+  bookData.created_at = created_at
   delete bookData.id
   await book.update(bookData)
+
   let bookValues = await db.dbCon.collection('books').doc(searchedId).get()
   let updatedBook = {id: searchedId, ...bookValues.data()}
+  updatedBook.created_at = secondsToDate(updatedBook.created_at._seconds)
 
   res.status(200).json(updatedBook)
 }
@@ -45,10 +98,20 @@ exports.update = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   const bookId = req.params.id
 
-  // const books = db.dbCon.collection('books')
-  // const bookRef = books.doc(bookId)
-  let bookRef = await db.dbCon.collection('books').doc(bookId);
-  bookRef.delete()
+  let book = db.dbCon.collection('books').doc(bookId);
+  let bookRef = await book.get()
 
-  res.status(200).json(bookId)
+  const error = new Error('Invalid request')
+  error.errorArray = []
+  error.statusCode = 400
+  if(!bookRef.data()) {
+    error.errorArray.push('Invalid id')
+  }
+  if(error.errorArray.length > 0) {
+    next(error)
+  }
+
+  await book.delete()
+
+  res.status(200).json()
 }

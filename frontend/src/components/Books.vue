@@ -1,14 +1,16 @@
 <template>
   <div class="container myBooks">
     <h1>My books</h1>
-    Sort by 
-    <button @click="sortBy('title')">Title</button>
-    <button @click="sortBy('price')">Price</button>
-     <button @click="sortBy('created_at')">Created at</button>
+    <div class="sortButton">
+      <div>Sort by </div>
+      <button @click="sortBy('title')">Title</button>
+      <button @click="sortBy('price')">Price</button>
+      <button @click="sortBy('created_at')">Created at</button>
+    </div>
     <ul class="list-unstyled">
       <li v-for="book in sortedBooks" :key="book.title" class="book">
         <p class=" text-capitalize">{{ book.title }} </p>
-        <p class="">Book price: {{ book.price}} </p>
+        <p class="">Price: {{ book.price}} RON </p>
         <router-link :to="{ name: 'BookDetails', params: { id: book.id} }">ShowMore</router-link>
 
         <div v-if="this.$store.getters.getAuthToken" class="booksActions">

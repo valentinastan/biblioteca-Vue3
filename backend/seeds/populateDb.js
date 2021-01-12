@@ -1,7 +1,7 @@
 const db = require('../lib/firebase');
 const faker = require('faker');
 const { random } = require('faker');
-const { currentDateAndTime } = require('../lib/generateDataAndTime')
+const { getTimestamp } = require('../lib/generateDataAndTime')
 
 const populateDb = async () => {
   await generateUsers()
@@ -28,7 +28,7 @@ const generateReviews = () => {
     reviews.push({
       email: usersEmails[Math.floor(Math.random() * usersEmails.length)],
       text: faker.lorem.sentences(),
-      created_at: currentDateAndTime()
+      created_at: getTimestamp()
     })        
   }
   return reviews
@@ -41,7 +41,7 @@ const addBook = async () => {
   let currentBook = await db.dbCon.collection('books').add({ 
     title: faker.lorem.sentence(),
     price: faker.random.float({'min': 10,'max': 150}),
-    created_at: currentDateAndTime()
+    created_at: getTimestamp()
   })
 
   for(review of reviews){
@@ -50,11 +50,9 @@ const addBook = async () => {
     createdReviews.push({ ...reviewCopy, _id: createdReview.id })
   }
 
+  createdReviews.forEach(review => delete review.created_at)
   await currentBook.update({reviews: createdReviews})
 
 }
 
 populateDb()
-
-
-//create review functie 

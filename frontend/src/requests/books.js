@@ -27,16 +27,13 @@ export async function putBookRequest(params, headers) {
   let updatedBook = await put('books/' + params.id, params, headers)
   
   console.log('params: ', params)
-  console.log('put: ', updatedBook)
+  console.log('put: ', updatedBook)//id + body
 
   return updatedBook.data
 }
 
 export async function deleteBookRequest(id, headers) {
-  console.log('idL   : ', id)
-  let deletedBook = await del('books/' + id, headers)
-  
-  console.log('deletedBook: ', deletedBook)
-
-  return deletedBook.data
+  await del('books/' + id, headers)
+ 
+  return
 }

@@ -56,6 +56,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getBooks')
+    console.log('cartile ',this.$store.state.books)
   },
   methods: {
     fillForm(book) {
@@ -106,8 +107,8 @@ export default {
           if(this.sortAsc) {
             orderSign = 1
           }
-          if(a.title < b.title) { return -1 * orderSign }
-          if(a.title > b.title) { return 1 * orderSign }
+          if(a.title.toUpperCase() < b.title.toUpperCase()) { return -1 * orderSign }
+          if(a.title.toUpperCase() > b.title.toUpperCase()) { return 1 * orderSign }
           return 0
         }
       }

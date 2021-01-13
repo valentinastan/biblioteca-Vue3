@@ -35,11 +35,7 @@ exports.index = async (req, res, next) => {
 
   let reviews = []
   reviewsRef.forEach(review => reviews.push({id: review.id, ...review.data()}))
-  console.log('rev ordonate', reviews)
-
-  reviews.forEach(review => review.created_at = secondsToDate(review.created_at._seconds))
-  console.log('cartile ordonate', reviews)
-  
+  reviews.forEach(review => review.created_at = review.created_at._seconds)
 
   res.status(200).json(reviews) 
 }
@@ -92,7 +88,7 @@ exports.create = async (req, res, next) => {
     return
   }
   let createdReview = {id: createdReviewRef.id, ...createdReviewRef.data()}
-  createdReview.created_at = secondsToDate(createdReview.created_at._seconds)
+  createdReview.created_at = createdReview.created_at._seconds
 
   //update book reviews with the new review
   let currentBook = {id: currentBookRef.id, ...currentBookRef.data()}

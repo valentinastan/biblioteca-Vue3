@@ -27,7 +27,7 @@ export async function putBookRequest(params, headers) {
   let updatedBook = await put('books/' + params.id, params, headers)
   
   console.log('params: ', params)
-  console.log('put: ', updatedBook)//id + body
+  console.log('put: ', updatedBook)
 
   return updatedBook.data
 }

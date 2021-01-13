@@ -6,7 +6,7 @@ exports.index = async (req, res, next) => {
 
   let books = []
   snapshot.forEach(book => books.push({id: book.id, ...book.data()}))
-  books.forEach(book => book.created_at = secondsToDate(book.created_at._seconds))
+  books.forEach(book => book.created_at = book.created_at._seconds)
 
   res.status(200).json(books) 
 }
@@ -27,7 +27,7 @@ exports.show = async (req, res, next) => {
   }
 
   let currentBook = {id: bookRef.id, ...bookRef.data()}
-  console.log('ce trimit', currentBook)
+
   res.status(200).json(currentBook)
 }
 
@@ -53,7 +53,7 @@ exports.create = async (req, res, next) => {
 
   let newBookRef = await (await db.dbCon.collection('books').add({...bookData, created_at: getTimestamp()})).get()
   let newBook = {id: newBookRef.id, ...newBookRef.data()}
-  newBook.created_at = secondsToDate(newBook.created_at._seconds)
+  newBook.created_at = newBook.created_at._seconds
   
   res.status(200).json(newBook)
 }
@@ -90,7 +90,7 @@ exports.update = async (req, res, next) => {
 
   let bookValues = await db.dbCon.collection('books').doc(searchedId).get()
   let updatedBook = {id: searchedId, ...bookValues.data()}
-  updatedBook.created_at = secondsToDate(updatedBook.created_at._seconds)
+  updatedBook.created_at = updatedBook.created_at._seconds
 
   res.status(200).json(updatedBook)
 }

@@ -1,5 +1,5 @@
 const db = require('../lib/firebase');
-const { secondsToDate, getTimestamp } = require('../lib/generateDataAndTime')
+const { getTimestamp } = require('../lib/generateDataAndTime')
 
 exports.index = async (req, res, next) => {
   const bookId = req.params.bookId

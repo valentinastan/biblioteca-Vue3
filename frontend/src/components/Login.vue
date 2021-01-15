@@ -39,8 +39,6 @@ export default {
   },
   methods: {
     handleSubmit() {
-      console.log(this.$store.getters.getAuthToken)
-      console.log('Actiunea: ', this.action)
       if (this.action === 'login') {
         this.loginUser()
       } else if (this.action === 'register') {

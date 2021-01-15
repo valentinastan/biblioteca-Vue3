@@ -17,10 +17,6 @@ export default {
     CreateBookForm
   },
   methods: {
-    // fillForm(book) {
-    //   console.log('cartea de editat', book)
-    //   return this.$store.state.currentBook = book
-    // }
   }
 };
 </script>

@@ -7,9 +7,7 @@ export async function getBooksRequest() {
 }
 
 export async function getOneBookRequest(id) {
-  console.log('id ul primit ', id)
   let currentBook = await get('books/' + id)
-  console.log('cartea primita din be ', currentBook)
 
   return currentBook.data
 }

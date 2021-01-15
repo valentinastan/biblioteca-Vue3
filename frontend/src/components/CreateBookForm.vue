@@ -28,16 +28,10 @@
 export default {
   data() {
     return {
-      // newBook: {
-      //   title: null,
-      //   price: null
-      // }
     }
   },
   methods: {
     handleSubmit() {
-      console.log(this.$store.state.currentBook)
-      console.log('Actiunea: ', this.$store.state.bookFormAction)
       switch(this.$store.state.bookFormAction) {
         case 'Add': {
           this.createNewBook()
@@ -59,7 +53,6 @@ export default {
     },
     updateBook() {
       let updatedBook = this.$store.state.currentBook
-      console.log('updated booooooooooooook ', updatedBook)
       if (updatedBook.title && updatedBook.price !== null) {
         this.$store.dispatch('putBook', {
           data: {...updatedBook}, 

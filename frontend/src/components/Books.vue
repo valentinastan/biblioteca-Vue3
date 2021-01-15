@@ -30,8 +30,6 @@
               </span>
             </div>
           </figure>
-          <!-- <button v-if="this.$store.getters.getAuthToken" :id='"PUT_" + book.id' @click=fillForm(book)>Edit</button> -->
-          <!-- <button v-if="this.$store.getters.getAuthToken" :id='"DEL_" + book.id' @click=deleteBook(book.id)>Delete</button> -->
         </div>
       </li>
     </ul>
@@ -56,11 +54,9 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getBooks')
-    console.log('cartile ',this.$store.state.books)
   },
   methods: {
     fillForm(book) {
-      console.log('cartea de editat', book)
       this.$store.state.bookFormAction = 'Update'
       return this.$store.state.currentBook = {...book}
     },

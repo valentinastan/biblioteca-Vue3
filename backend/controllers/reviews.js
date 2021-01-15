@@ -1,5 +1,5 @@
 const db = require('../lib/firebase');
-const { getTimestamp } = require('../lib/generateDataAndTime')
+const { getTimestamp, secondsToDate } = require('../lib/generateDataAndTime')
 
 exports.index = async (req, res, next) => {
   const bookId = req.params.bookId
@@ -11,6 +11,7 @@ exports.index = async (req, res, next) => {
   let reviewsRef = snapshot.where('bookId', '==', bookId).orderBy('created_at', 'desc')
 
   if(boundReviewId) {
+    console.log(boundReviewId)
     if(direction == 'next') {
       const cursor = await snapshot.doc(boundReviewId).get();
       console.log('like this', cursor.data().created_at)
@@ -22,10 +23,11 @@ exports.index = async (req, res, next) => {
     }
     if(direction == 'previous') {
       const cursor = await snapshot.doc(boundReviewId).get();
+      console.log('like this', cursor.data().created_at)
 
       reviewsRef = await reviewsRef
       .endBefore(cursor.data().created_at)
-      .limit(pageSize)
+      // .limit(pageSize)
       .get();
     }
   }
@@ -36,6 +38,9 @@ exports.index = async (req, res, next) => {
   let reviews = []
   reviewsRef.forEach(review => reviews.push({id: review.id, ...review.data()}))
   reviews.forEach(review => review.created_at = review.created_at._seconds)
+  if(reviews.length > pageSize) {
+    reviews = reviews.slice(Math.max(reviews.length - pageSize, 0))
+  }
 
   res.status(200).json(reviews) 
 }
@@ -92,8 +97,9 @@ exports.create = async (req, res, next) => {
 
   //update book reviews with the new review
   let currentBook = {id: currentBookRef.id, ...currentBookRef.data()}
-  delete createdReview.created_at
-  currentBook.reviews.unshift(createdReview)
+  let copyCreatedReview = {...createdReview}
+  delete copyCreatedReview.created_at
+  currentBook.reviews.unshift(copyCreatedReview)
 
   if(currentBook.reviews.length > 10) {
     for (let i = 0; i < (currentBook.reviews.length - 10); i++) {
@@ -103,6 +109,7 @@ exports.create = async (req, res, next) => {
   
   delete currentBook.id
   await snapshotBook.update(currentBook)
+  console.log(createdReview)
 
   res.status(200).json(createdReview)
 }

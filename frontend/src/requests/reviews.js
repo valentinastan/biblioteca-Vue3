@@ -1,7 +1,10 @@
 import { get, post } from './request'
 
 export async function getReviewsRequest({ bookId, queryParams }) {
+  console.log('get reviews')
   let reviews = await get('books/' + bookId + '/reviews', queryParams)
+
+  console.log(reviews)
 
   return reviews.data
 }

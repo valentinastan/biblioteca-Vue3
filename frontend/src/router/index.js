@@ -8,7 +8,7 @@ const routes = [
     component: Home
   },
   {
-    path: "/login/:action",
+    path: "/auth/:action",
     name: "Login",
     props: true,
     component: () =>
